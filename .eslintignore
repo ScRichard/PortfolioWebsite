@@ -1,0 +1,30 @@
+.eslintrc.json
+# TypeScript and Next.js configuration files
+tsconfig.json
+next.config.js
+postcss.config.js
+tailwind.config.ts
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env.local
+.env.*.local
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file
+.env
