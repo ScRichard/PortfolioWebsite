@@ -25,6 +25,14 @@ export default function Hero() {
     },
   }
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const section = document.querySelector('[data-section="about"]')
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section
       id="home"
@@ -65,28 +73,41 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <Link href="#projects" className="btn-primary inline-block text-center">
+          <a 
+            href="#" 
+            onClick={(e) => {
+              e.preventDefault()
+              const section = document.querySelector('[data-section="projects"]')
+              if (section) section.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="btn-primary inline-block text-center"
+          >
             View Projects
-          </Link>
-          <Link href="#contact" className="btn-secondary inline-block text-center">
+          </a>
+          <a 
+            href="#" 
+            onClick={(e) => {
+              e.preventDefault()
+              const section = document.querySelector('[data-section="contact"]')
+              if (section) section.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="btn-secondary inline-block text-center"
+          >
             Contact Me
-          </Link>
+          </a>
         </motion.div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="flex justify-center mt-12"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <Link
-            href="#about"
+        <div className="flex justify-center mt-12 animate-bounce">
+          <a
+            href="#"
+            onClick={handleScroll}
             className="text-slate-400 hover:text-blue-400 transition-colors p-3 rounded-full border border-slate-600 hover:border-blue-400"
             aria-label="Scroll to about section"
           >
             <ArrowDown size={24} />
-          </Link>
-        </motion.div>
+          </a>
+        </div>
       </motion.div>
     </section>
   )

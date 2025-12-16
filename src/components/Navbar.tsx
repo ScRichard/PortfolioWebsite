@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,18 +19,57 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0,
+    }
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionName = entry.target.getAttribute('data-section')
+          if (sectionName) {
+            setActiveSection(sectionName)
+          }
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    const sections = document.querySelectorAll('[data-section]')
+    sections.forEach((section) => observer.observe(section))
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section))
+    }
+  }, [])
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionName: string) => {
+    e.preventDefault()
+    const section = document.querySelector(`[data-section="${sectionName}"]`)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+      setActiveSection(sectionName)
+      setIsOpen(false)
+    }
+  }
+
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', section: 'home' },
+    { name: 'About', section: 'about' },
+    { name: 'Skills', section: 'skills' },
+    { name: 'Projects', section: 'projects' },
+    { name: 'Blog', section: 'blog' },
+    { name: 'Contact', section: 'contact' },
   ]
 
   return (
     <motion.nav
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-dark-bg/95 backdrop-blur-md border-b border-dark-border shadow-lg' : 'bg-transparent'
+        isScrolled ? 'bg-dark-bg/95 backdrop-blur-md border-b border-dark-border shadow-lg' : 'border-transparent bg-transparent'
       }`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -45,14 +85,19 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.name}
-                href={item.href}
-                className="text-slate-300 hover:text-blue-400 transition-colors duration-300 relative group text-sm font-medium"
+                href="#"
+                onClick={(e) => handleNavClick(e, item.section)}
+                className={`text-sm font-medium transition-colors duration-300 relative group ${
+                  activeSection === item.section ? 'text-blue-400' : 'text-slate-300 hover:text-blue-400'
+                }`}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300" />
-              </Link>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-blue-400 transition-all duration-300 ${
+                  activeSection === item.section ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
+              </a>
             ))}
           </div>
 
@@ -76,14 +121,18 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
           >
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300"
+                href="#"
+                onClick={(e) => handleNavClick(e, item.section)}
+                className={`block px-4 py-2 rounded-lg transition-all duration-300 ${
+                  activeSection === item.section
+                    ? 'text-blue-400 bg-slate-800/50'
+                    : 'text-slate-300 hover:text-blue-400 hover:bg-slate-800/50'
+                }`}
               >
                 {item.name}
-              </Link>
+              </a>
             ))}
           </motion.div>
         )}
