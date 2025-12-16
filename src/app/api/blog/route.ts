@@ -5,6 +5,11 @@ import { eq } from 'drizzle-orm'
 
 export async function GET() {
   try {
+    if (!process.env.DATABASE_URL) {
+      // Return empty array if database not configured
+      return NextResponse.json([])
+    }
+
     const posts = await db.query.blogPosts.findMany({
       where: eq(blogPosts.published, true),
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
@@ -13,7 +18,8 @@ export async function GET() {
     return NextResponse.json(posts)
   } catch (error) {
     console.error('Error fetching blog posts:', error)
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 })
+    // Return empty array instead of error to prevent blocking the site
+    return NextResponse.json([])
   }
 }
 

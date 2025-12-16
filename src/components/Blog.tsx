@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, Calendar, Clock, Tag } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface BlogPost {
   id: number
@@ -23,10 +23,14 @@ export default function Blog() {
     const fetchPosts = async () => {
       try {
         const response = await fetch('/api/blog')
+        if (!response.ok) {
+          throw new Error('Failed to fetch')
+        }
         const data = await response.json()
-        setBlogPosts(data)
+        setBlogPosts(Array.isArray(data) ? data : [])
       } catch (error) {
         console.error('Failed to fetch blog posts:', error)
+        setBlogPosts([])
       } finally {
         setLoading(false)
       }

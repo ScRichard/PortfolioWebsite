@@ -39,7 +39,7 @@ export default function Hero() {
       className="min-h-screen flex items-center justify-center pt-20 px-4 md:px-8 relative overflow-hidden"
     >
       {/* Background gradient */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden backdrop-blur-3xl">
         <div className="absolute top-20 -left-40 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl animate-pulse" />
       </div>

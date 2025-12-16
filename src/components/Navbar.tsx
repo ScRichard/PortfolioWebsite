@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -67,14 +67,31 @@ export default function Navbar() {
   ]
 
   return (
-    <motion.nav
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-dark-bg/95 backdrop-blur-md border-b border-dark-border shadow-lg' : 'border-transparent bg-transparent'
-      }`}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 md:hidden z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.nav
+        className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+          isScrolled || isOpen
+            ? 'bg-dark-bg/95 backdrop-blur-md border-b border-dark-border shadow-lg'
+            : 'border-transparent bg-transparent'
+        }`}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -112,31 +129,34 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        {isOpen && (
-          <motion.div
-            className="md:hidden mt-4 space-y-3 pb-4"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href="#"
-                onClick={(e) => handleNavClick(e, item.section)}
-                className={`block px-4 py-2 rounded-lg transition-all duration-300 ${
-                  activeSection === item.section
-                    ? 'text-blue-400 bg-slate-800/50'
-                    : 'text-slate-300 hover:text-blue-400 hover:bg-slate-800/50'
-                }`}
-              >
-                {item.name}
-              </a>
-            ))}
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="md:hidden mt-4 space-y-3 pb-4"
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href="#"
+                  onClick={(e) => handleNavClick(e, item.section)}
+                  className={`block px-4 py-2 rounded-lg transition-all duration-300 ${
+                    activeSection === item.section
+                      ? 'text-blue-400 bg-slate-800/50'
+                      : 'text-slate-300 hover:text-blue-400 hover:bg-slate-800/50'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </motion.nav>
+      </motion.nav>
+    </>
   )
 }
