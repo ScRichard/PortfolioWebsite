@@ -70,17 +70,22 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-dark-bg">
-      {/* Header */}
+      {/* Admin Header */}
       <div className="bg-dark-card border-b border-dark-border sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors"
-          >
-            <LogOut size={20} />
-            Logout
-          </button>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-100">Admin Dashboard</h1>
+              <p className="text-slate-400 text-sm mt-1">Manage blog posts and content</p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-slate-300 hover:text-red-400 hover:bg-red-600/10 rounded-lg transition-colors border border-dark-border hover:border-red-500/50"
+            >
+              <LogOut size={20} />
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 
