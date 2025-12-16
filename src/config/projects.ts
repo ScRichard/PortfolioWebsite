@@ -30,26 +30,16 @@ export const projectsData: Project[] = [
       { label: 'Team Members', value: 4 },
     ],
     links: {
-      github: 'https://github.com',
-      youtube: 'https://youtube.com',
+      github: 'https://github.com/ScRichard/Gothaj-Next-Gen',
+      youtube: 'https://youtube.com/@GothajClient',
     },
     featured: true,
   },
   {
-    id: 'portfolio-website',
-    title: 'Portfolio Website',
-    description: 'Modern, responsive portfolio built with Next.js, React, and Tailwind CSS.',
-    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-    links: {
-      github: 'https://github.com/ScRichard/portfolio',
-    },
-    featured: false,
-  },
-  {
-    id: 'project-3',
+    id: 'project-2',
     title: 'Coming Soon',
     description: 'More exciting projects in development...',
-    technologies: ['TBD'],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React', "PostgreSQL"],
     featured: false,
   },
 ]

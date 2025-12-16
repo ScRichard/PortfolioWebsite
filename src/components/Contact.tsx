@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Mail, Send, Github, Linkedin, CheckCircle, AlertCircle } from 'lucide-react'
+import { contactInfo } from '@/config/contact'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -95,7 +96,7 @@ export default function Contact() {
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           {/* Contact Methods */}
           <motion.a
-            href="mailto:contact@richardschmidt.dev"
+            href={`mailto:${contactInfo.email}`}
             variants={itemVariants}
             className="card group hover:bg-blue-600/10 hover:border-blue-500/50 text-center"
             whileHover={{ y: -5 }}
@@ -104,12 +105,12 @@ export default function Contact() {
               <Mail className="text-blue-400" size={28} />
             </div>
             <h3 className="font-bold text-slate-100 mb-2">Email</h3>
-            <p className="text-slate-400 text-sm break-all">contact@richardschmidt.dev</p>
+            <p className="text-slate-400 text-sm break-all">{contactInfo.email}</p>
           </motion.a>
 
           {/* GitHub */}
           <motion.a
-            href="https://github.com/ScRichard"
+            href={contactInfo.github}
             target="_blank"
             rel="noopener noreferrer"
             variants={itemVariants}
@@ -120,12 +121,12 @@ export default function Contact() {
               <Github className="text-slate-300" size={28} />
             </div>
             <h3 className="font-bold text-slate-100 mb-2">GitHub</h3>
-            <p className="text-slate-400 text-sm">@ScRichard</p>
+            <p className="text-slate-400 text-sm">ScRichard</p>
           </motion.a>
 
           {/* LinkedIn */}
           <motion.a
-            href="https://linkedin.com/in/richard-schmidt"
+            href={contactInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             variants={itemVariants}

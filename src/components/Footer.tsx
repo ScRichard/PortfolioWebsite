@@ -17,13 +17,13 @@ export default function Footer() {
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      href: 'https://linkedin.com/in/richard-schmidt',
+      href: 'https://linkedin.com/in/schmidtrich',
       label: 'Visit LinkedIn',
     },
     {
       name: 'Email',
       icon: Mail,
-      href: 'mailto:contact@richardschmidt.dev',
+      href: 'mailto:me@richardschmidt.dev',
       label: 'Send email',
     },
   ]
